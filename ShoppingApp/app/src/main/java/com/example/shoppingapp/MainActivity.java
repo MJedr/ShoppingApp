@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ItemHelper mHelper;
     private ListView mItemListView;
     private ArrayAdapter<String> mAdapter;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
         mHelper = new ItemHelper(this);
         mItemListView = (ListView) findViewById(R.id.list_to_buy);
+
+        button = (Button) findViewById(R.id.add_to_list_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+                
+            }
+        });
 
         updateUI();
     }
@@ -115,4 +126,10 @@ public class MainActivity extends AppCompatActivity {
         db.close();
         updateUI();
     }
+
+    public void openDialog() {
+        ItemDialog exampleDialog = new ItemDialog();
+        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+    }
+
 }
