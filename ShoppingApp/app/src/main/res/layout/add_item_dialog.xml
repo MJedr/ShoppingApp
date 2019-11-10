@@ -19,7 +19,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et"
+        android:id="@+id/item_name"
         android:hint="Item name"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
@@ -29,7 +29,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et2"
+        android:id="@+id/amount"
         android:hint="Amount"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
@@ -39,7 +39,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et3"
+        android:id="@+id/unit_price"
         android:hint="Unit price"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"

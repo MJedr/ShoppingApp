@@ -1,5 +1,7 @@
 package com.example.shoppingapp;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,9 +50,8 @@ public class MainActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.add_to_list_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                openDialog();
-                
+            public void onClick(View v) {
+                showDialog(MainActivity.this);
             }
         });
 
@@ -129,7 +131,59 @@ public class MainActivity extends AppCompatActivity {
 
     public void openDialog() {
         ItemDialog exampleDialog = new ItemDialog();
-        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+        exampleDialog.show(getSupportFragmentManager(), "dialog");
+        EditText itemEditText = (EditText) findViewById(R.id.item_name);
+        try{
+        String strValue = itemEditText.getText().toString();
+        String item = String.valueOf(itemEditText.getText());
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Item.ItemEntry.COL_ITEM_NAME, item);
+        db.insertWithOnConflict(Item.ItemEntry.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        db.close();}
+        catch(Exception e){
+            System.out.println("No element!!!");
+        }
     }
 
+    public void showDialog(Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.add_item_dialog);
+
+        final EditText itemInput = dialog.findViewById(R.id.item_name);
+        final EditText amountInput = dialog.findViewById(R.id.amount);
+        final EditText unitPriceInput = dialog.findViewById(R.id.unit_price);
+
+        Button btnok = (Button) dialog.findViewById(R.id.btnok);
+        btnok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String item = itemInput.getText().toString();
+                String _amount = amountInput.getText().toString();
+                int amount = Integer.parseInt(_amount);
+                String _unitPrice = unitPriceInput.getText().toString();
+                int unitPrice = Integer.parseInt(_unitPrice);
+                SQLiteDatabase db = mHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
+                values.put(Item.ItemEntry.COL_ITEM_NAME, item);
+                db.insertWithOnConflict(Item.ItemEntry.TABLE,
+                        null, values, SQLiteDatabase.CONFLICT_REPLACE);
+                db.close();
+                dialog.dismiss();
+                updateUI();
+            }
+        });
+        Button btncn = (Button) dialog.findViewById(R.id.btncn);
+        btncn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
 }

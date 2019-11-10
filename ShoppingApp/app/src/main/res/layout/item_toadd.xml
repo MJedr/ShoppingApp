@@ -9,8 +9,25 @@
         android:id="@+id/item_title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Hi"
+        android:text="Item"
         android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_amount"
+        android:layout_centerHorizontal="true"
+        android:text="5"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/item_amount"
+        android:text="5"
+        android:paddingLeft="20dp"
+        android:textSize="20sp" />
 
     <Button
         android:layout_width="wrap_content"
