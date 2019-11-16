@@ -19,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ItemHelper mHelper;
     private ListView mItemListView;
-    private ArrayAdapter<String> mAdapter;
+    private GroceryItemArrayAdapter mAdapter;
     private Button button;
 
     @Override
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        updateUI();
+//        updateUI();
     }
 
     @Override
@@ -65,53 +66,39 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_item:
-                final EditText itemEditText = new EditText(this);
-                AlertDialog dialog = new AlertDialog.Builder(this).setTitle("New item")
-                        .setMessage("Add a new item: ")
-                        .setView(itemEditText)
-                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String item = String.valueOf(itemEditText.getText());
-                                SQLiteDatabase db = mHelper.getWritableDatabase();
-                                ContentValues values = new ContentValues();
-                                values.put(Item.ItemEntry.COL_ITEM_NAME, item);
-                                db.insertWithOnConflict(Item.ItemEntry.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-                                db.close();
-                                updateUI();
-                            }
-                        })
-                        .setNegativeButton("Cancel", null).create();
-                dialog.show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    private void updateUI() {
+//            ArrayList<String> itemList = new ArrayList<>();
+        final ArrayList<GroceryItem> groceryItemList = new ArrayList<>();
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+        Cursor cursor = db.query(Item.ItemEntry.TABLE,
+                new String[]{Item.ItemEntry._ID, Item.ItemEntry.COL_ITEM_NAME,
+                        Item.ItemEntry.COL_AMOUNT, Item.ItemEntry.COL_UNIT_PRICE},
+                null, null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            int index = cursor.getColumnIndex(Item.ItemEntry._ID);
+            GroceryItem groceryItem;
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            String amount = cursor.getString(cursor.getColumnIndex("amount"));
+            String unit_price = cursor.getString(cursor.getColumnIndex("unit_price"));
+            groceryItemList.add(new GroceryItem(name, amount, unit_price));
+//                itemList.add(cursor.getString(index));
+
         }
-    }
 
-    private void updateUI(){
-            ArrayList<String> itemList = new ArrayList<>();
-            SQLiteDatabase db = mHelper.getReadableDatabase();
-            Cursor cursor = db.query(Item.ItemEntry.TABLE,
-                    new String[] {Item.ItemEntry._ID, Item.ItemEntry.COL_ITEM_NAME},
-                    null, null, null, null, null, null);
-
-            while(cursor.moveToNext()){
-                int index = cursor.getColumnIndex(Item.ItemEntry.COL_ITEM_NAME);
-                itemList.add(cursor.getString(index));
+        if (mAdapter == null) {
+            if(groceryItemList.isEmpty()){
 
             }
-            if(mAdapter == null){
-                mAdapter = new ArrayAdapter<>(this, R.layout.item_toadd, R.id.item_title, itemList);
+            else{
+                mAdapter = new GroceryItemArrayAdapter(this,groceryItemList);
                 mItemListView.setAdapter(mAdapter);
             }
+        }
+
             else {
                 mAdapter.clear();
-                mAdapter.addAll(itemList);
+                mAdapter.addAll(groceryItemList);
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -129,22 +116,6 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
     }
 
-    public void openDialog() {
-        ItemDialog exampleDialog = new ItemDialog();
-        exampleDialog.show(getSupportFragmentManager(), "dialog");
-        EditText itemEditText = (EditText) findViewById(R.id.item_name);
-        try{
-        String strValue = itemEditText.getText().toString();
-        String item = String.valueOf(itemEditText.getText());
-        SQLiteDatabase db = mHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Item.ItemEntry.COL_ITEM_NAME, item);
-        db.insertWithOnConflict(Item.ItemEntry.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-        db.close();}
-        catch(Exception e){
-            System.out.println("No element!!!");
-        }
-    }
 
     public void showDialog(Activity activity) {
         final Dialog dialog = new Dialog(activity);
@@ -161,17 +132,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String item = itemInput.getText().toString();
-                String _amount = amountInput.getText().toString();
-                int amount = Integer.parseInt(_amount);
-                String _unitPrice = unitPriceInput.getText().toString();
-                int unitPrice = Integer.parseInt(_unitPrice);
+                String amount = amountInput.getText().toString();
+                String uunitPrice = unitPriceInput.getText().toString();
+
                 SQLiteDatabase db = mHelper.getWritableDatabase();
+//                mHelper.onUpgrade(db, 2, 3);
+
                 ContentValues values = new ContentValues();
                 values.put(Item.ItemEntry.COL_ITEM_NAME, item);
+                values.put(Item.ItemEntry.COL_AMOUNT, amount);
+                values.put(Item.ItemEntry.COL_UNIT_PRICE, uunitPrice);
                 db.insertWithOnConflict(Item.ItemEntry.TABLE,
                         null, values, SQLiteDatabase.CONFLICT_REPLACE);
                 db.close();
+
                 dialog.dismiss();
+
                 updateUI();
             }
         });
@@ -182,8 +158,6 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
-
     }
 }

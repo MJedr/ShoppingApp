@@ -13,7 +13,6 @@ public class Item {
         public static final String COL_ITEM_NAME = "name";
         public static final String COL_AMOUNT = "amount";
         public static final String COL_UNIT_PRICE = "unit_price";
-        public static final String COL_UNIT_NAME = "unit_name";
 
     }
 

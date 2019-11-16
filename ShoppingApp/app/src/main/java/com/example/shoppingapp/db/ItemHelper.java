@@ -15,9 +15,8 @@ public class ItemHelper extends SQLiteOpenHelper{
         String createTable = "CREATE TABLE " + Item.ItemEntry.TABLE + " (" +
                 Item.ItemEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Item.ItemEntry.COL_ITEM_NAME + " TEXT NOT NULL, " +
-                Item.ItemEntry.COL_AMOUNT + " DOUBLE NOT NULL, " +
-                Item.ItemEntry.COL_UNIT_PRICE + " DOUBLE NOT NULL, "+
-                Item.ItemEntry.COL_UNIT_NAME + " TEXT NOT NULL);";
+                Item.ItemEntry.COL_AMOUNT + " TEXT, " +
+                Item.ItemEntry.COL_UNIT_PRICE + " TEXT);";
         db.execSQL(createTable);
     }
 
