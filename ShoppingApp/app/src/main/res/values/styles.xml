@@ -17,4 +17,14 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Theme" parent="android:Theme.Light">
+        <item name="android:background">#FFEAEAEA</item>
+    </style>
+
+    <style name="Preference.">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+
+
+
 </resources>

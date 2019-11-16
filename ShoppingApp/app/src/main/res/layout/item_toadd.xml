@@ -3,38 +3,40 @@
     android:layout_gravity="center_vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/item_title"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Item"
-        android:textSize="20sp"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/item_title" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/item_amount" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/item_price" />
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/item_amount"
-        android:layout_centerHorizontal="true"
-        android:text="5"
-        android:textSize="20sp"/>
-
-    <TextView
-        android:id="@+id/item_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/item_amount"
-        android:text="5"
-        android:paddingLeft="20dp"
-        android:textSize="20sp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/item_delete"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:onClick="deleteItem"
+        android:background="@color/colorAccent"
         android:text="delete"/>
+
 </RelativeLayout>

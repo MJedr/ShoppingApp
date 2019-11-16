@@ -12,6 +12,8 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +41,16 @@ public class GroceryItemArrayAdapter extends ArrayAdapter<GroceryItem> {
         TextView name = (TextView)listItem.findViewById(R.id.item_title);
         TextView amount = (TextView)listItem.findViewById(R.id.item_amount);
         TextView unit_price = (TextView)listItem.findViewById(R.id.item_price);
+        TextView units = (TextView)listItem.findViewById(R.id.units);
+        TextView currency = (TextView)listItem.findViewById(R.id.currency);
+
+        String amount_text = item.amount + " " + item.units;
+        String price_text = item.unit_price + " " + item.currency + "/per unit";
 
         name.setText(item.name);
-        amount.setText(item.amount);
-        unit_price.setText(item.unit_price);
+        amount.setText(amount_text);
+        unit_price.setText(price_text);
+
 
         return listItem;
     }

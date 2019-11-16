@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colorName">
+        <item name="0">Red</item>
+        <item name="1">Black</item>
+        <item name="2">Yellow</item>
+        <item name="3">White</item>
+    </string-array>
+    <string-array name="colorCode">
+        <item name="0">#ff0000</item>
+        <item name="1">#111111</item>
+        <item name="2">#ffff33</item>
+        <item name="3">#ffffff</item>
+    </string-array>
+</resources>

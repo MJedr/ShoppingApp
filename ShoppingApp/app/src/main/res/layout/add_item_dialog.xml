@@ -10,7 +10,7 @@
         android:layout_height= "wrap_content"
         android:textSize="30dp"
         android:gravity="center"
-        android:textColor="#da0c0c"
+        android:textColor="#009688"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -26,30 +26,53 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"/>
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/amount"
-        android:hint="Amount"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <EditText
+        <EditText
+            android:id="@+id/amount"
+            android:layout_width="130dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:hint="Amount" />
+
+        <EditText
+            android:id="@+id/units"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/unit_measure"
+            android:hint="Units" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/unit_price"
-        android:hint="Unit price"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/unit_price"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:hint="Unit price" />
+
+        <EditText
+            android:id="@+id/currency"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/unit_price"
+            android:hint="Currency" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
