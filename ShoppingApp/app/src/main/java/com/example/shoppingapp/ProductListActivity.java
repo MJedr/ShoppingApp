@@ -173,11 +173,15 @@ public class ProductListActivity extends AppCompatActivity {
         ContentValues newValues = new ContentValues();
         if (res.moveToFirst()) {
             Double val_to_change = Double.valueOf(res.getString(res.getColumnIndex("amount")));
+            if (val_to_change >1){
             Double newValue = val_to_change - 1;
             String newValueToPut = Double.toString(newValue);
             newValues.put(Item.ItemEntry.COL_AMOUNT, newValueToPut);
+            db.update(Item.ItemEntry.TABLE, newValues, Item.ItemEntry.COL_ITEM_NAME + " =?", new String[]{item});}
+            else{
+                db.delete(Item.ItemEntry.TABLE, Item.ItemEntry.COL_ITEM_NAME + " = ?", new String[] {item});
+            }
         }
-        db.update(Item.ItemEntry.TABLE, newValues, Item.ItemEntry.COL_ITEM_NAME + " =?", new String[]{item});
         db.close();
         updateUI();
     }
