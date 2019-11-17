@@ -1,13 +1,22 @@
 package com.example.shoppingapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.preference.PreferenceManager;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    private SharedPreferences mSharedPreferences;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,21 +1,14 @@
 package com.example.shoppingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
-import androidx.preference.PreferenceManager;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -24,6 +17,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+import androidx.preference.PreferenceManager;
 
 import com.example.shoppingapp.db.Item;
 import com.example.shoppingapp.db.ItemHelper;
@@ -40,15 +37,20 @@ public class ProductListActivity extends AppCompatActivity {
     private Button button;
     private SharedPreferences mSharedPreferences;
     private Context mContext;
-    TextView sizetxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_list);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mContext = getApplicationContext();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String appTheme = mSharedPreferences.getString("theme_prefer", "AppTheme");
+        if (appTheme.equals("AppTheme")) {
+            setTheme(R.style.AppTheme);
+        }else{
+            setTheme(R.style.AppThemeCustom);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_product_list);
 
     RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_prod_list_view);
     String backgroundColor = mSharedPreferences.getString(getString(R.string.background_color), "#FFFFFF");
@@ -142,6 +144,44 @@ public class ProductListActivity extends AppCompatActivity {
         updateUI();
     }
 
+    public void addItem(View view){
+        View parent = (View) view.getParent();
+        TextView itemTextView = (TextView) parent.findViewById(R.id.item_title);
+        String item = String.valueOf(itemTextView.getText());
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT amount FROM items WHERE name = ?",
+                new String[]{item});
+        ContentValues newValues = new ContentValues();
+        if (res.moveToFirst()) {
+            Double val_to_change = Double.valueOf(res.getString(res.getColumnIndex("amount")));
+            Double newValue = val_to_change + 1;
+            String newValueToPut = Double.toString(newValue);
+            newValues.put(Item.ItemEntry.COL_AMOUNT, newValueToPut);
+        }
+        db.update(Item.ItemEntry.TABLE, newValues, Item.ItemEntry.COL_ITEM_NAME + " =?", new String[]{item});
+        db.close();
+        updateUI();
+    }
+
+    public void removeItem(View view){
+        View parent = (View) view.getParent();
+        TextView itemTextView = (TextView) parent.findViewById(R.id.item_title);
+        String item = String.valueOf(itemTextView.getText());
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT amount FROM items WHERE name = ?",
+                new String[]{item});
+        ContentValues newValues = new ContentValues();
+        if (res.moveToFirst()) {
+            Double val_to_change = Double.valueOf(res.getString(res.getColumnIndex("amount")));
+            Double newValue = val_to_change - 1;
+            String newValueToPut = Double.toString(newValue);
+            newValues.put(Item.ItemEntry.COL_AMOUNT, newValueToPut);
+        }
+        db.update(Item.ItemEntry.TABLE, newValues, Item.ItemEntry.COL_ITEM_NAME + " =?", new String[]{item});
+        db.close();
+        updateUI();
+    }
+
 
     public void showDialog(Activity activity) {
         final Dialog dialog = new Dialog(activity);
@@ -195,9 +235,5 @@ public class ProductListActivity extends AppCompatActivity {
 
         dialog.show();
     }
-    // Method to set Size of Text.
-    private void changeTextSize(Float i) {
-        sizetxt.setTextSize(i);
-    }
-}
 
+}
