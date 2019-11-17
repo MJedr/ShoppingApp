@@ -11,10 +11,10 @@
             />
 
         <ListPreference
-            android:key="@string/text_size"
-            android:title="Text size"
-            android:entries="@array/textSizeLabel"
-            android:entryValues="@array/textSize"
+            android:key="theme_prefer"
+            android:title="Theme color"
+            android:entries="@array/NavBarLabel"
+            android:entryValues="@array/NavBarCode"
             android:defaultValue="1"
             android:summary="Adjust text size"
             />
