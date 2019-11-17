@@ -12,4 +12,16 @@
         <item name="2">#ffff33</item>
         <item name="3">#ffffff</item>
     </string-array>
+
+    <!-- Label ordering must match values -->
+    <string-array name="textSizeLabel">
+        <item name="0">Small</item>
+        <item name="1">Medium</item>
+        <item name="2">Large</item>
+    </string-array>
+    <string-array name="textSize">
+        <item name="0">0.75</item>
+        <item name="1">1</item>
+        <item name="2">1.25</item>
+    </string-array>
 </resources>

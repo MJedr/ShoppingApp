@@ -10,4 +10,13 @@
             android:summary="Choose a background color"
             />
 
+        <ListPreference
+            android:key="@string/text_size"
+            android:title="Text size"
+            android:entries="@array/textSizeLabel"
+            android:entryValues="@array/textSize"
+            android:defaultValue="1"
+            android:summary="Adjust text size"
+            />
+
 </PreferenceScreen>

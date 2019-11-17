@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -37,7 +38,8 @@ import com.example.shoppingapp.db.ItemHelper;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity  implements SharedPreferences.OnSharedPreferenceChangeListener {
+//  implements SharedPreferences.OnSharedPreferenceChangeListener
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private ItemHelper mHelper;
@@ -46,17 +48,24 @@ public class MainActivity extends AppCompatActivity  implements SharedPreference
     private Button button;
     private SharedPreferences mSharedPreferences;
     private Context mContext;
+    TextView sizetxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RelativeLayout rl = (RelativeLayout)findViewById(R.id.activity_main);
         mContext = getApplicationContext();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+        RelativeLayout rl = (RelativeLayout)findViewById(R.id.activity_main);
         String backgroundColor = mSharedPreferences.getString(getString(R.string.background_color),"#FFFFFF");
         rl.setBackgroundColor(Color.parseColor(backgroundColor));
 
+        Configuration configuration = getResources().getConfiguration();
+        float txtSize = Float.parseFloat(mSharedPreferences.
+                getString(getString(R.string.text_size), "1.0"));
+        configuration.fontScale *= txtSize;
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
         mHelper = new ItemHelper(this);
         mItemListView = (ListView) findViewById(R.id.list_to_buy);
@@ -97,19 +106,6 @@ public class MainActivity extends AppCompatActivity  implements SharedPreference
             rl.setBackgroundColor(Color.YELLOW);
         }
     }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("background_color")) {
-            setColor(sharedPreferences.getBoolean("background_color",true));
-        }
-    }
-
-    private void setupSharedPreferences() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-    }
-
 
     private void updateUI() {
         final ArrayList<GroceryItem> groceryItemList = new ArrayList<>();
@@ -214,5 +210,9 @@ public class MainActivity extends AppCompatActivity  implements SharedPreference
         });
 
         dialog.show();
+    }
+    // Method to set Size of Text.
+    private void changeTextSize(Float i) {
+        sizetxt.setTextSize(i);
     }
 }
