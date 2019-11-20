@@ -11,6 +11,10 @@ public class Item {
     public class ItemEntry implements BaseColumns{
         public static final String TABLE = "items";
         public static final String COL_ITEM_NAME = "name";
+        public static final String COL_AMOUNT = "amount";
+        public static final String COL_UNIT_PRICE = "unit_price";
+        public static final String COL_UNITS = "units";
+        public static final String COL_CURRENCY = "currency";
 
     }
 

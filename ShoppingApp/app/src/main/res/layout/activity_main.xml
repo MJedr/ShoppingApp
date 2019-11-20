@@ -4,14 +4,51 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <ListView
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/hello"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_to_buy" />
+        android:gravity="center"
+        android:textAlignment="center"
+        android:layout_marginTop="150dp"
+        android:textSize="50dp"
+        android:text="Hello!"/>
+
+    <TextView
+        android:id="@+id/nb_of_items_descr1"
+        android:layout_width="371dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hello"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textSize="@dimen/start_page_text"
+        android:text="You have"/>
+
+    <TextView
+        android:id="@+id/nb_of_it"
+        android:layout_width="371dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nb_of_items_descr1"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="35dp" />
+
+    <TextView
+        android:id="@+id/nb_of_items_descr2"
+        android:layout_width="371dp"
+        android:layout_height="552dp"
+        android:layout_below="@+id/nb_of_it"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textSize="@dimen/start_page_text" />
+
+
 </RelativeLayout>

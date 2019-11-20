@@ -8,6 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppThemeCustom" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryCustom</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkCustom</item>
+        <item name="colorAccent">@color/colorAccentCustom</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -17,4 +24,24 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Theme" parent="android:Theme.Light">
+        <item name="android:background">#FFEAEAEA</item>
+    </style>
+
+    <style name="Preference.">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+
+    <style name="FontSizeSmall">
+        <item name="android:textSize">6sp</item>
+    </style>
+    <style name="FontSizeMedium">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="FontSizeLarge">
+        <item name="android:textSize">28sp</item>
+    </style>
+
 </resources>
+
+

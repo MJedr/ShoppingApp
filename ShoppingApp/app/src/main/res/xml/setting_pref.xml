@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+        <ListPreference
+            android:key="@string/background_color"
+            android:title="Background Color"
+            android:entries="@array/colorName"
+            android:entryValues="@array/colorCode"
+            android:defaultValue="#ffffff"
+            android:summary="Choose a background color"
+            />
+
+        <ListPreference
+            android:key="theme_prefer"
+            android:title="Theme color"
+            android:entries="@array/NavBarLabel"
+            android:entryValues="@array/NavBarCode"
+            android:defaultValue="1"
+            android:summary="Adjust text size"
+            />
+
+</PreferenceScreen>

@@ -14,7 +14,11 @@ public class ItemHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db){
         String createTable = "CREATE TABLE " + Item.ItemEntry.TABLE + " (" +
                 Item.ItemEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Item.ItemEntry.COL_ITEM_NAME + " TEXT NOT NULL);";
+                Item.ItemEntry.COL_ITEM_NAME + " TEXT NOT NULL, " +
+                Item.ItemEntry.COL_AMOUNT + " TEXT, " +
+                Item.ItemEntry.COL_UNIT_PRICE + " TEXT, " +
+                Item.ItemEntry.COL_UNITS + " TETX, "+
+                Item.ItemEntry.COL_CURRENCY + " TEXT);";
         db.execSQL(createTable);
     }
 
