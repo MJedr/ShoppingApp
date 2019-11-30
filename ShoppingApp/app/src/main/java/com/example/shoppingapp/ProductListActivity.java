@@ -2,13 +2,17 @@ package com.example.shoppingapp;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +24,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 
 import com.example.shoppingapp.db.Item;
@@ -37,12 +42,18 @@ public class ProductListActivity extends AppCompatActivity {
     private Button button;
     private SharedPreferences mSharedPreferences;
     private Context mContext;
+    private BroadcastReceiver myReceiver = new MyReceiver();
+    private static final String ACTION_SHOW_TOAST =
+            BuildConfig.APPLICATION_ID + ".ACTION_SHOW_TOAST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getApplicationContext();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(myReceiver,
+                        new IntentFilter(ACTION_SHOW_TOAST));
         String appTheme = mSharedPreferences.getString("theme_prefer", "AppTheme");
         if (appTheme.equals("AppTheme")) {
             setTheme(R.style.AppTheme);
@@ -224,6 +235,11 @@ public class ProductListActivity extends AppCompatActivity {
                 db.close();
 
                 dialog.dismiss();
+                String string = "Dodano " + item + " (" + amount + " " + units + ") do listy";
+                registerReceiver(myReceiver,new IntentFilter("com.example.shoppingapp.PRODUCT_ADDED"));
+                Intent intent = new Intent("com.example.shoppingapp.PRODUCT_ADDED");
+                intent.putExtra("string", string);
+                sendBroadcast(intent);
 
                 updateUI();
             }
@@ -238,6 +254,27 @@ public class ProductListActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        registerReceiver(myReceiver, new IntentFilter("com.example.shoppingapp.PRODUCT_ADDED"));
+        Log.i("ReceiverTest", "zarejestrowano odbiorcę");
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        unregisterReceiver(myReceiver);
+        Log.i("ReceiverTest", "wyrejestrowano odbiorcę");
+    }
+
+    public void sendBroadcast(View v) {
+        Intent customBroadcastIntent = new Intent(ACTION_SHOW_TOAST);
+        LocalBroadcastManager.getInstance(this)
+                .sendBroadcast(customBroadcastIntent);
+        Log.i("ReceiverTest", "dodano produkt");
     }
 
 }

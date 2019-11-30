@@ -1,14 +1,18 @@
 package com.example.shoppingapp;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +21,7 @@ import androidx.preference.PreferenceManager;
 
 import com.example.shoppingapp.db.Item;
 import com.example.shoppingapp.db.ItemHelper;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -88,4 +93,5 @@ public class MainActivity extends AppCompatActivity {
         db.close();
         return count;
     }
+
 }
