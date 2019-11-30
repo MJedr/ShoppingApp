@@ -32,7 +32,7 @@ import com.example.shoppingapp.db.ItemHelper;
 
 import java.util.ArrayList;
 
-//  implements SharedPreferences.OnSharedPreferenceChangeListener
+
 public class ProductListActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -63,16 +63,13 @@ public class ProductListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_product_list);
 
-    RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_prod_list_view);
+    RelativeLayout rl = findViewById(R.id.activity_prod_list_view);
     String backgroundColor = mSharedPreferences.getString(getString(R.string.background_color), "#FFFFFF");
         rl.setBackgroundColor(Color.parseColor(backgroundColor));
 
     mHelper = new ItemHelper(this);
-    mItemListView =(ListView)
-
-    findViewById(R.id.list_to_buy);
-    button =(Button)
-    findViewById(R.id.add_to_list_btn);
+    mItemListView = findViewById(R.id.list_to_buy);
+    button = findViewById(R.id.add_to_list_btn);
         button.setOnClickListener(new View.OnClickListener()
 
     {
@@ -95,15 +92,6 @@ public class ProductListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setColor(boolean background) {
-        RelativeLayout rl = (RelativeLayout)findViewById(R.id.activity_main);
-        if (background == true) {
-            rl.setBackgroundColor(Color.WHITE);
-        } else {
-            rl.setBackgroundColor(Color.YELLOW);
-        }
-    }
-
     private void updateUI() {
         final ArrayList<GroceryItem> groceryItemList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
@@ -115,7 +103,6 @@ public class ProductListActivity extends AppCompatActivity {
 
         while (cursor.moveToNext()) {
             int index = cursor.getColumnIndex(Item.ItemEntry._ID);
-            GroceryItem groceryItem;
             String name = cursor.getString(cursor.getColumnIndex("name"));
             String amount = cursor.getString(cursor.getColumnIndex("amount"));
             String unit_price = cursor.getString(cursor.getColumnIndex("unit_price"));
@@ -157,7 +144,7 @@ public class ProductListActivity extends AppCompatActivity {
 
     public void addItem(View view){
         View parent = (View) view.getParent();
-        TextView itemTextView = (TextView) parent.findViewById(R.id.item_title);
+        TextView itemTextView = parent.findViewById(R.id.item_title);
         String item = String.valueOf(itemTextView.getText());
         SQLiteDatabase db = mHelper.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT amount FROM items WHERE name = ?",
@@ -176,7 +163,7 @@ public class ProductListActivity extends AppCompatActivity {
 
     public void removeItem(View view){
         View parent = (View) view.getParent();
-        TextView itemTextView = (TextView) parent.findViewById(R.id.item_title);
+        TextView itemTextView = parent.findViewById(R.id.item_title);
         String item = String.valueOf(itemTextView.getText());
         SQLiteDatabase db = mHelper.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT amount FROM items WHERE name = ?",
@@ -210,7 +197,7 @@ public class ProductListActivity extends AppCompatActivity {
         final EditText unitsInput = dialog.findViewById(R.id.units);
         final EditText currencyInput = dialog.findViewById(R.id.currency);
 
-        Button btnok = (Button) dialog.findViewById(R.id.btnok);
+        Button btnok = dialog.findViewById(R.id.btnok);
 
         btnok.setOnClickListener(new View.OnClickListener() {
             @Override
